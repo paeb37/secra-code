@@ -1,0 +1,36 @@
+Virtual Env:
+
+1. python3 -m venv .venv
+2. . .venv/bin/activate
+3. pip install Flask
+
+
+Conda:
+
+1. conda create --name secra --clone base
+2. conda activate secra
+3. conda deactivate
+
+Flask:
+
+https://flask.palletsprojects.com/en/3.0.x/installation/
+
+pip install Flask
+
+https://flask.palletsprojects.com/en/3.0.x/quickstart/
+
+React:
+
+npx create-react-app frontend
+
+Testing:
+
+Backend:
+
+python3 server.py
+OR
+flask --app hello run
+
+Frontend:
+
+npm start
