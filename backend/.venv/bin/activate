@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/brandonpae/Desktop/secra_code/backend/.venv"
+VIRTUAL_ENV="/Users/brandonpae/Desktop/secra-code/backend/.venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
