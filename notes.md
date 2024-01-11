@@ -27,10 +27,15 @@ Testing:
 
 Backend:
 
-python3 server.py
+python3 app.py
 OR
-flask --app hello run
+flask --app app run
 
 Frontend:
 
 npm start
+
+SSH
+
+1. Move "mysql.pem" file into your local .ssh folder
+2. 
