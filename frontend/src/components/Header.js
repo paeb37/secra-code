@@ -1,6 +1,8 @@
 import logo from '../logo.svg'
 import axios from "axios";
 
+// Header contains the logout option
+
 function Header(props) {
 
   function logMeOut() {
@@ -9,7 +11,7 @@ function Header(props) {
       url:"/logout",
     })
     .then((response) => {
-       props.token() // remove the token from local storage
+       props.removeToken() // remove the token from local storage
     }).catch((error) => {
       if (error.response) {
         console.log(error.response)

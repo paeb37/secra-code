@@ -11,12 +11,13 @@ import awswrangler
 import os
 from dotenv import load_dotenv, find_dotenv
 import paramiko
+import pandas as pd
 
 load_dotenv(find_dotenv())
 
 # Doing it the awswrangler/sqlalchemy way 
 
-engine = None # use this to make SQL queries later
+# engine = None # use this to make SQL queries later
 
 # backend directory location (MAY NEED LATER)
 # current_dir_path = os.path.dirname(os.path.abspath(__file__))
@@ -35,8 +36,17 @@ SSH_PRIVATE_KEY_PASSWORD = os.getenv('SSH_PRIVATE_KEY_PASSWORD')
 
 # ssh tunnel closes at the end of the method (so we need to reconnect each time we make a query...)
 # example query: "select * from USERS"
-def make_query(query):
-    global engine # to indicate we want to change the global var and not make a local copy with same name
+
+'''
+For logging in a user or checking if they exist
+'''
+def user_exists(username, password=""):
+
+    '''
+    if no password specified, then just checking by username
+    '''
+
+    # global engine # to indicate we want to change the global var and not make a local copy with same name
 
     with SSHTunnelForwarder( 
         # NEED TO REPLACE EACH TIME WITH THE NEW IP OF DATABASE (in ENV file) #
@@ -69,15 +79,110 @@ def make_query(query):
             # engine.dispose() 
 
             with engine.connect() as connection:
-                rows = connection.execute(text(query)) # need to wrap string in text
+                
+                query = None
+                result = None
+                params = None
+
+                if password == "": # just checking if the username exists
+                    query = """
+                    SELECT * FROM USERS
+                    WHERE username = :username
+                    """
+
+                    params = {"username": username} # must be a dict
+
+                    result = connection.execute(text(query), params)
+                else: # checking both username and password
+                    query = """
+                    SELECT * FROM USERS
+                    WHERE username = :username AND password = :password
+                    """
+
+                    params = {"username": username, "password": password} # must be a dict
+                    
+                    result = connection.execute(text(query), params)
+                
+                df = pd.DataFrame(result.fetchall(), columns=result.keys())
+
+                # rows = connection.execute(text(query)) # need to wrap string in text
                 # print(rows)
 
-                return rows
+                if not df.empty: # user exists
+                    return True
+                else:
+                    return False
+
+                # return rows
             
                 for row in rows:
                     print(row)
 
         except Exception as e:
-            print(e)
+            print("ERROR: " + str(e))
 
 # make_query("SELECT * FROM USERS")
+
+'''
+Create a new user in the database
+'''
+def create_user(username, password):
+    # global engine # to indicate we want to change the global var and not make a local copy with same name
+
+    with SSHTunnelForwarder( 
+        # NEED TO REPLACE EACH TIME WITH THE NEW IP OF DATABASE (in ENV file) #
+
+        (AWS_IP, 22), # 22 by default
+        ssh_username='ec2-user', 
+        # ssh_pkey=pem_key_path, # not sure if absolute is necessary
+        # I think it uses the pem key in the .ssh folder by default so this doesn't matter
+        # ssh_private_key_password=SSH_PRIVATE_KEY_PASSWORD,
+        remote_bind_address=('127.0.0.1', 3306) # port 3306 is default for mySQL
+
+    ) as server: 
+        try: 
+            print("****SSH Tunnel Established****")   
+
+            # server.start() # start ssh server
+
+            conf ={
+                'host': '127.0.0.1', # local because 
+                'port': str(server.local_bind_port), # '3306',
+                'database': "SECRA", # might need to change this
+                'user': "root",
+                'password': DATABASE_PASSWORD
+            }
+
+            # might need this instead
+            # local_port = str(server.local_bind_port)
+
+            engine = create_engine("mysql+pymysql://{user}:{password}@{host}:{port}/{database}".format(**conf))
+            # engine.dispose() 
+
+            with engine.connect() as connection:
+                
+                query = None
+
+                # change this later
+                first_name = username
+                last_name = username
+                email = username
+
+                # DO NOT USE F STRING REPLACEMENT, WEAK TO SQL INJECTION ATTACKS
+                query = """
+                INSERT INTO USERS (FIRST_NAME, LAST_NAME, EMAIL, USERNAME, PASSWORD)
+                VALUES (:first_name,:last_name,:email,:username,:password);
+                """
+
+                params = {"first_name": first_name, 
+                          "last_name": last_name, 
+                          "email": email, 
+                          "username": username,
+                          "password": password} # must be a dict
+
+                connection.execute(text(query), params)
+                connection.commit()
+
+        except Exception as e:
+            print("ERROR: " + str(e))
+            

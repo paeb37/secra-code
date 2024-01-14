@@ -25,13 +25,11 @@ npx create-react-app frontend
 
 Testing:
 
-Backend:
+*Backend:*
 
-python3 app.py
-OR
-flask --app app run
+python3 run.py
 
-Frontend:
+*Frontend:*
 
 npm start
 
