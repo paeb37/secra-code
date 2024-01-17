@@ -28,4 +28,4 @@ backend/__pycache__
 
 # security files to ignore
 backend/mysql.pem
-backend/.flaskenv
+backend/.env
