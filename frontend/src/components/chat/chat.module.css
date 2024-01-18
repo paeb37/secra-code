@@ -1,125 +1,110 @@
 body {
-    background-color: #fff; /* NEED TO USE IMPORTANT TO OVERRIDE */
-    font-family: 'Source Sans Pro', sans-serif !important;
+    font-family: monospace, sans-serif;
+    
 }
 
-.container { /* default container */
+
+.container {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
 }
 
-.image-center {
-    mix-blend-mode: multiply;
+
+h1 {
+    color: #282929;
+    font-family: Arial, sans-serif;
+    text-align: center; 
 }
 
-.top-logo {
-    width: 75px; /* Set the desired width */
-    height: auto; /* Maintain aspect ratio */
-}
-
-.center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 10%;
-}
-
-.text-center {
-    display: block;
-    text-align: center;
-}
 
 h3 {
     color: #282929;
+    font-family: Arial, sans-serif;
     margin-top: 40px;
     margin-bottom: 20px;
 }
 
-h1 {
-    color: #282929;
-    text-align: center; 
-}
 
 form {
     display: flex;
-    /*flex-direction: column;*/
+    flex-direction: column;
     font-size: 15px;
 }
 
-#submitButton {
-    padding: 10px; /* Adjust padding as needed */
+
+form textarea {
+    min-height: 15px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1 px solid #282929;
+    background-color: #f1ffe7;
+    color: #282929;
+    font-family: monospace, sans-serif;
+    font-size: 15px;
+    border-radius: 10px;
+}
+
+
+form input[type="submit"] {
+    padding: 15px;
     border: none;
-    background-color: #C8D4FF !important;
-    color: #ffff;
+    background-color: #96a8d9;
+    color: #f1ffe7;
     cursor: pointer;
     font-size: 15px;
     border-radius: 10px;
-    height: 50px !important;
-    width: 50px !important;
+    width: 20%;
     text-align: center;
 }
 
-#submitButton:hover { /* darkens the background color when you hover over */
-    background-color: #8399d4;
+[type="text"].box {
+    font-family: monospace, sans-serif;
+    width: 450px;
+    margin: 0 auto;
+    border-radius: 10px;
+    background-color: #f1ffe7;
+    color: #282929;
 }
 
 form input[type="submit"]:hover { /* darkens the background color when you hover over */
-    background-color: #97AEFF;
+    background-color: #8399d4;
 }
 
-/* for form fields besides passwords (username) */
-form input[type="text"], [type="text"].box {
-    /* font-family: monospace, sans-serif; */
-    width: 1175px !important;
-    background-color: #ffff;
-    color: #282929 !important;
-    text-align: left;
-    
-    margin-right: 20px; /* Add margin to create space between the input and the button */
-    border: 1px solid #ccc;
-    float: left !important;
+
+#response { /* for gpt response */
+    font-family: monospace, sans-serif;
+    width: 780px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1 px solid #282929;
+    background-color: #f1ffe7;
+    color: #282929; 
+    white-space: pre-wrap;
+    height: 200px;
+    font-size: 15px;
+    border-radius: 10px;
+}
+
+
+iframe{
+    display: block;
+    padding: 20px;
+    border: 5px solid #c697d8;
+    filter: hue-rotate(95deg) contrast(120%) invert(80%);
+}
+
+[type="submit"][value="Login"]{
+    padding: 15px;
+    border: none;
+    background-color: #96a8d9;
+    color: #f1ffe7;
+    cursor: pointer;
+    font-size: 15px;
+    border-radius: 10px;
+    width: 100px;
+    text-align: center;
 }
 
 /* Login Page Styles */
-
-.bottomForm {
-    display: inline;
-    position: fixed;
-    bottom: 0;
-    width: 85%;
-    padding: 10px !important;
-    background-color: #D3D3D3;
-    float: left;
-    margin: 0px !important;
-}
-
-/*
-#assistantTextBubble {
-    background-color: #CCE3FF; 
-    padding: 10px;
-    border-radius: 10px;
-    max-width: 200px;
-    display: inline-block;
-    margin-bottom: 10px;
-
-*/
-
-.bubble {
-    max-width: 200px;
-    padding: 10px;
-    border-radius: 10px;
-    margin: 10px;
-    clear: both;
-    word-wrap: break-word;
-}
-
-.assistant {
-    background-color: #CCE3FF; 
-    float: left;
-}
-
-.user {
-    background-color: #8AC0FF;
-    float: right;
-}
