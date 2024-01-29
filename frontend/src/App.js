@@ -42,7 +42,7 @@ function App() {
             <Route path="/login" element={<LoginPage token={token} setToken={setToken} setUsername={setUsername} />} />
             <Route path="/register" element={<RegisterPage token={token} setToken={setToken} setUsername={setUsername} />} />
 
-            <Route path="/chat" element={<ChatPage token={token} setToken={setToken} />} />
+            <Route path="/chat" element={<ChatPage token={token} setToken={setToken} username={username} />} />
         </Routes>
 
         {/* if no token, render the login component. else, define the routes / endpoints

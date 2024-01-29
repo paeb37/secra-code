@@ -1,5 +1,5 @@
 body {
-    background-color: white; /** #f1ffe7 */
+    background-color: #fff; /* NEED TO USE IMPORTANT TO OVERRIDE */
     font-family: 'Source Sans Pro', sans-serif !important;
 }
 

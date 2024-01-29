@@ -37,3 +37,6 @@ SSH
 
 1. Move "mysql.pem" file into your local .ssh folder
 2. 
+
+*INSTALLATIONS*
+1. 
