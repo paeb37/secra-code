@@ -24,6 +24,7 @@ function ChatPage(props) {
     // FOR THE QUERY FORM
     const [query, setQuery] = useState("");
     const [response, setResponse] = useState("");
+
     const submittedQuery = false;
     let gpt_response = "";
 
@@ -39,6 +40,9 @@ function ChatPage(props) {
     };
 
     function submitQuery(event) {
+
+        console.log("Hello testing how many times this is called")
+
         event.preventDefault() // prevent default form submission behavior (because we want to connect to BE endpoint)
         
         setResponse("generating"); // "Generating response ... "
@@ -73,38 +77,29 @@ function ChatPage(props) {
 
             console.log(gpt_response)
 
-            setResponse(gpt_response); // "Generating response ... "
+            // setResponse(gpt_response);
+            // NOW PARSE THE JSON TO OBTAIN THE RELEVANT EVENT INFORMATION:
+            
+            /* 
+            let times = gpt_response['times']; // array of JSON objects
+            let num_times = times.length;
 
-            // NOW PARSE THE JSON TO OBTAIN THE RELEVANT INFORMATION:
-
-            // EVENT PARAMS 
-            timezone = gpt_response['timezone']
-            summary = gpt_response['summary'];
-            loc = gpt_response['location']; // location is a keyword in JS
-            recurrence = gpt_response['recurrence'];
-
-            /*
-
-            Once GPT returns the list of times, we want to render them as separate options / components
-            All events should be similar/the same, except start, end, date
-            Create a new component with these fields, then just show them side by side
-            We need a way to figure out how to respond back with which option was clicked
-            Specifically, 
-
-            */
-            // SUGGESTED TIMES
-            const times = gpt_response['times']; // array of JSON objects
-            const num_times = times.length;
-
-            if (num_times == 0) {
+            if (num_times === 0) {
                 throw new Error("No suggested times found");
             }
 
-            // iterate over the times and format them for display
+            // OTHER EVENT PARAMS 
+            let timezone = gpt_response['timezone']
+            let summary = gpt_response['summary'];
+            let loc = gpt_response['location']; // location is a keyword in JS
+            let recurrence = gpt_response['recurrence'];
+
+            // iterate over the times and pass them into components to display
             
-            start = "";
-            end = "";
-            date = "";
+            let start = "";
+            let end = "";
+            let date = "";
+
             let time = "";
 
             // edit this with React later
@@ -124,8 +119,23 @@ function ChatPage(props) {
                 let formatted_time = start + " to " + end + " " + display_tz;
 
                 console.log("Option " + (i + 1) + ":\nTime: " + formatted_time + "\nDate: " + date);
-                
             }
+            */
+
+            // pass the JSON info to the Assistant response
+
+            setResponse(gpt_response); // should be a JSON
+
+            /*
+
+            Once GPT returns the list of times, we want to render them as separate options / components
+            All events should be similar/the same, except start, end, date
+            Create a new component with these fields, then just show them side by side
+            We need a way to figure out how to respond back with which option was clicked
+            Specifically, 
+
+            */
+
 
             // response is a JSON string, convert to JSON object
             // gpt_response = JSON.parse(gpt_response)
@@ -171,21 +181,15 @@ function ChatPage(props) {
             </form>
         
             {/* GPT RESPONSE HERE */}
-            <AssistantResponse response={response} />
 
+            {/* Once GPT returns a response, we use components (for Event) to represent the times */}
+            <br />
+            <br />
+            <AssistantResponse response={response} username={username} />
 
-        </div>
-
-        <div className={styles.container}>
-            <h3>Your Calendar</h3>
-
-            <form id={styles.calendarForm}>
-                <textarea type="text" name="choice" id="choice" placeholder="Choice" required></textarea>
-                <input type="submit" value="Add to my Calendar" />
-            </form>
         </div>
         
-        {/*-- From tester1.secra calendar */}
+        {/*-- From tester1.secra calendar 
         <div align="center">
 
         <div style={{ position: 'relative', width: '800px', height: '600px' }}>
@@ -209,7 +213,7 @@ function ChatPage(props) {
         </div>
 
 
-        </div>
+        </div> */}
         </>
     );
 }

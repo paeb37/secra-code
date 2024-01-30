@@ -32,7 +32,7 @@ from flask_cors import CORS
 load_dotenv(find_dotenv())
 app = Flask(__name__)
 
-CORS(app, resources={r"/*": {"origins": "http://localhost:5000"}}) # same port number
+CORS(app, resources={r"/*": {"origins": ["http://localhost:5000", "http://localhost:3000"]}}) # same port number
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/calendar']
@@ -42,7 +42,9 @@ CALENDAR_ID = 'primary' # just set as primary (default) calendar for now
 This is called by GPT route, NOT the user client
 To add a new event 
 '''
-def submit(request): # when user submits a request to add event to calendar
+
+@app.route('/submit', methods=["POST"])
+def submit(): # when user submits a request to add event to calendar
     # print(request.method)
 
     print("add/submit endpoint triggered")
@@ -51,9 +53,10 @@ def submit(request): # when user submits a request to add event to calendar
     try:
         if request.method == "POST":
             print("success")
-            print(request.body)
+            print(request.data)
 
-            input_str = json.loads(request.body.decode('utf-8')) # use loads() to load from string, not file
+            input_str = json.loads(request.data.decode('utf-8')) # use loads() to load from string, not file
+            username = input_str['username']
             input_str = input_str['event']
 
             print(input_str)
@@ -121,14 +124,16 @@ def submit(request): # when user submits a request to add event to calendar
 
             print("Event: " + str(event))
 
-            add_event(event) # main method
+            add_event(event, username) # main method
 
-            return JsonResponse({
+            return {
                 'success': True,
-            })
+            }
         
         else:
-            return JsonResponse({"success": False})
+            return {
+                "success": False
+            }
         
     except:
         # printing stack trace
@@ -138,12 +143,16 @@ def submit(request): # when user submits a request to add event to calendar
 Supplementary method for adding an event to user's calendar
 From the web client/browser
 '''
-def add_event(event):
+def add_event(event, username):
     '''Basic test of Google Calendar API'''
     '''Now passing in event, not event ID, as param'''
     
+    # UPDATED CREATE SERVICE CODE WHICH REQUIRES USER ID
+    user_id = db.get_user_id(username)
+    user_id = int(user_id)
+
     # create service to interact with gcal API
-    service = create_service() 
+    service = create_service(user_id)
 
     # get events in their gcal
     events = get_events(service)
