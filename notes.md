@@ -1,11 +1,14 @@
 Virtual Env:
 
+OLD (ONLY TO CREATE A NEW ENV)
 1. python3 -m venv .venv
 2. . .venv/bin/activate
 3. pip install Flask
 
+NEW
+1. . .venv/bin/activate
 
-Conda:
+Conda (DO NOT USE)
 
 1. conda create --name secra --clone base
 2. conda activate secra
@@ -40,3 +43,7 @@ SSH
 
 *INSTALLATIONS*
 1. 
+
+*Queries:*
+
+Schedule a 15 minute study session for Thursday, repeating every week. The location is Uris Hall
