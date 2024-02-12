@@ -9,10 +9,11 @@ Frontend:
 Go to "frontend" folder
 npm start
 
-Installations (with conda):
+Installations:
 
-conda create --name
-pip installations 
+conda create --name secra
+conda activate secra
+
 pip3 install flask 
 pip3 install flask_jwt_extended 
 pip3 install python-dotenv 
@@ -24,6 +25,6 @@ pip3 install flask_cors
 pip3 install --upgrade google-api-python-client 
 sudo pip install PyMySQL
 
-*Queries:*
+Testing:
 
 Schedule a 15 minute study session for Thursday, repeating every week. The location is Uris Hall
