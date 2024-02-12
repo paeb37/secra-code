@@ -36,14 +36,14 @@ Step 3 - Run AWS server
 Backend:
 
 Activate conda environment
-##
+
 Go to "backend" folder
-##
+
 python3 run.py
-##
+
 
 Frontend:
 
 Go to "frontend" folder
-##
+
 npm start
