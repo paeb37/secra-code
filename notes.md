@@ -1,48 +1,28 @@
-Virtual Env:
+Backend:
 
-OLD (ONLY TO CREATE A NEW ENV)
-1. python3 -m venv .venv
-2. . .venv/bin/activate
-3. pip install Flask
-
-NEW
-1. . .venv/bin/activate
-
-Conda (DO NOT USE)
-
-1. conda create --name secra --clone base
-2. conda activate secra
-3. conda deactivate
-
-Flask:
-
-https://flask.palletsprojects.com/en/3.0.x/installation/
-
-pip install Flask
-
-https://flask.palletsprojects.com/en/3.0.x/quickstart/
-
-React:
-
-npx create-react-app frontend
-
-Testing:
-
-*Backend:*
-
+Activate conda environment
+Go to "backend" folder
 python3 run.py
 
-*Frontend:*
+Frontend:
 
+Go to "frontend" folder
 npm start
 
-SSH
+Installations (with conda):
 
-1. Move "mysql.pem" file into your local .ssh folder
-2. 
-
-*INSTALLATIONS*
-1. 
+conda create --name
+pip installations 
+pip3 install flask 
+pip3 install flask_jwt_extended 
+pip3 install python-dotenv 
+pip3 install sshtunnel 
+pip3 install sqlalchemy 
+pip3 install awswrangler 
+pip3 install openai --upgrade 
+pip3 install flask_cors 
+pip3 install --upgrade google-api-python-client 
+sudo pip install PyMySQL
 
 *Queries:*
 
